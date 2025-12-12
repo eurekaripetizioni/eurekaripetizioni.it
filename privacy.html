@@ -86,6 +86,122 @@
         .back-link:hover {
             border-color: var(--accent);
         }
+
+        /* COOKIE BANNER */
+        .cookie-banner {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(960px, calc(100% - 20px));
+            background: var(--card);
+            color: var(--text);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+            padding: 14px 16px;
+            display: none;
+            gap: 12px;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .cookie-banner.visible {
+            display: flex;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        .cookie-text strong {
+            color: var(--text);
+        }
+
+        .cookie-text a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cookie-btn {
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: #f8fafc;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 13px;
+            transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, border-color 120ms ease;
+        }
+
+        .cookie-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(29, 78, 216, 0.45);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+            background: #ffffff;
+        }
+
+        .cookie-btn.primary {
+            background: linear-gradient(120deg, #1d4ed8, #60a5fa);
+            border-color: transparent;
+            color: #ffffff;
+        }
+
+        .cookie-manage {
+            position: fixed;
+            bottom: 18px;
+            left: 18px;
+            padding: 7px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(107, 114, 128, 0.6);
+            background: #ffffff;
+            color: var(--text);
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+            display: none;
+            z-index: 45;
+        }
+
+        .cookie-manage.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .cookie-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cookie-actions {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cookie-banner {
+                bottom: 12px;
+                padding: 12px;
+            }
+
+            .cookie-manage {
+                bottom: 12px;
+                left: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -93,7 +209,7 @@
     <a class="back-link" href="index.html">← Torna al sito</a>
     <div class="card">
         <h1>Privacy Policy</h1>
-        <p class="small"><strong>Ultimo aggiornamento:</strong> 5/12/25</p>
+        <p class="small"><strong>Ultimo aggiornamento:</strong> 11 dicembre 2025</p>
 
         <p>
             La presente informativa descrive come <strong>Eureka! – Associazione di Promozione Sociale</strong> tratta
@@ -154,11 +270,12 @@
 
         <h2>3. Cookie e tecnologie simili</h2>
         <p>
-            Il sito non utilizza cookie di profilazione o cookie per finalità di marketing.
+            Il sito utilizza cookie tecnici essenziali per il funzionamento e la sicurezza e, solo previo consenso
+            espresso tramite il banner dedicato, cookie di analisi anonimizzata (Google Analytics) per ottenere
+            statistiche aggregate sull’utilizzo delle pagine.
         </p>
         <p>
-            Possono essere utilizzati esclusivamente <strong>cookie tecnici essenziali</strong> e tecnologie similari,
-            necessari a:
+            I <strong>cookie tecnici essenziali</strong> e tecnologie similari sono necessari a:
         </p>
         <ul>
             <li>garantire il corretto funzionamento del sito;</li>
@@ -166,8 +283,13 @@
             <li>abilitare le funzionalità di protezione e caching fornite dai servizi utilizzati (ad es. Cloudflare).</li>
         </ul>
         <p>
-            Tali cookie tecnici non richiedono il consenso preventivo dell’utente e non sono utilizzati per tracciare la
-            navigazione a fini di profilazione.
+            I <strong>cookie di analisi</strong> sono disattivati per impostazione predefinita e vengono caricati solo se
+            l’utente seleziona “Accetta” nel banner cookie. I dati raccolti tramite Google Analytics sono trattati in
+            forma aggregata e con indirizzo IP anonimizzato; è sempre possibile revocare il consenso tramite il tasto
+            “Impostazioni cookie” presente sul sito e scegliendo “Rifiuta”.
+        </p>
+        <p>
+            Non vengono utilizzati cookie di profilazione o di marketing.
         </p>
 
         <h2>4. Finalità del trattamento e basi giuridiche</h2>
@@ -319,5 +441,130 @@
         </p>
     </div>
 </div>
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
+    <div class="cookie-text">
+        <strong>Usiamo cookie tecnici e, con il tuo consenso, Google Analytics</strong> per misurare
+        le visite in forma aggregata e anonimizzata. Puoi rifiutare o modificare la scelta in
+        qualsiasi momento da questo banner. <a href="./privacy.html">Privacy Policy</a>
+    </div>
+    <div class="cookie-actions">
+        <button class="cookie-btn" id="cookieReject">Rifiuta</button>
+        <button class="cookie-btn primary" id="cookieAccept">Accetta</button>
+    </div>
+</div>
+<button class="cookie-manage" id="cookieManage" type="button">Impostazioni cookie</button>
+
+<script>
+    // Cookie banner / Google Analytics
+    const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: sostituisci con il tuo ID (es. G-ABCDEF1234)
+    const GA_DISABLED_FLAG = GA_MEASUREMENT_ID ? `ga-disable-${GA_MEASUREMENT_ID}` : null;
+    const CONSENT_KEY = 'cookie-consent';
+    const cookieBanner = document.getElementById('cookieBanner');
+    const cookieManage = document.getElementById('cookieManage');
+    const cookieAccept = document.getElementById('cookieAccept');
+    const cookieReject = document.getElementById('cookieReject');
+    let analyticsLoaded = false;
+
+    function showCookieBanner() {
+        if (cookieBanner) {
+            cookieBanner.classList.add('visible');
+        }
+        if (cookieManage) {
+            cookieManage.classList.remove('visible');
+        }
+    }
+
+    function hideCookieBanner() {
+        if (cookieBanner) {
+            cookieBanner.classList.remove('visible');
+        }
+    }
+
+    function toggleManageButton(visible) {
+        if (!cookieManage) return;
+        cookieManage.classList.toggle('visible', Boolean(visible));
+    }
+
+    function clearAnalyticsCookies() {
+        const analyticsCookies = ['_ga', '_gid', '_gat', `_ga_${GA_MEASUREMENT_ID?.replace('G-', '') || ''}`];
+        analyticsCookies.forEach(function (cookieName) {
+            if (!cookieName) return;
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        });
+    }
+
+    function setAnalyticsDisabled(disabled) {
+        if (!GA_DISABLED_FLAG) return;
+        window[GA_DISABLED_FLAG] = Boolean(disabled);
+        if (disabled) {
+            clearAnalyticsCookies();
+        }
+    }
+
+    function loadGoogleAnalytics() {
+        if (analyticsLoaded) return;
+        if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
+            console.warn('Imposta GA_MEASUREMENT_ID per attivare Google Analytics.');
+            return;
+        }
+        analyticsLoaded = true;
+        setAnalyticsDisabled(false);
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = window.gtag || gtag;
+        gtag('js', new Date());
+        gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+    }
+
+    function applyConsent(status) {
+        if (status === 'accepted') {
+            loadGoogleAnalytics();
+            hideCookieBanner();
+            toggleManageButton(true);
+        } else if (status === 'rejected') {
+            setAnalyticsDisabled(true);
+            hideCookieBanner();
+            toggleManageButton(true);
+        }
+    }
+
+    if (cookieAccept) {
+        cookieAccept.addEventListener('click', function () {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            applyConsent('accepted');
+        });
+    }
+
+    if (cookieReject) {
+        cookieReject.addEventListener('click', function () {
+            localStorage.setItem(CONSENT_KEY, 'rejected');
+            applyConsent('rejected');
+        });
+    }
+
+    if (cookieManage) {
+        cookieManage.addEventListener('click', function () {
+            showCookieBanner();
+        });
+    }
+
+    (function initConsent() {
+        setAnalyticsDisabled(true);
+        const saved = localStorage.getItem(CONSENT_KEY);
+        if (saved === 'accepted') {
+            applyConsent('accepted');
+        } else if (saved === 'rejected') {
+            applyConsent('rejected');
+        } else {
+            showCookieBanner();
+        }
+    })();
+</script>
 </body>
 </html>
