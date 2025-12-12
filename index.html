@@ -676,6 +676,99 @@
             text-decoration-thickness: 1px;
         }
 
+        /* COOKIE BANNER */
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(960px, calc(100% - 20px));
+            background: #ffffff;
+            color: var(--text-main);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+            padding: 14px 16px;
+            display: none;
+            gap: 12px;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .cookie-banner.visible {
+            display: flex;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cookie-text strong {
+            color: var(--accent-strong);
+        }
+
+        .cookie-text a {
+            color: var(--accent-strong);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cookie-btn {
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: #f8fafc;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 13px;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+        }
+
+        .cookie-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+            background: #ffffff;
+        }
+
+        .cookie-btn.primary {
+            background: linear-gradient(120deg, #2563eb, #60a5fa);
+            border-color: transparent;
+            color: #ffffff;
+        }
+
+        .cookie-manage {
+            position: fixed;
+            bottom: 18px;
+            left: 18px;
+            padding: 7px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(107, 114, 128, 0.6);
+            background: #ffffff;
+            color: #111827;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+            display: none;
+            z-index: 45;
+        }
+
+        .cookie-manage.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         /* RESPONSIVE */
 
         @media (max-width: 768px) {
@@ -727,11 +820,30 @@
             #mapFrame {
                 height: 220px;
             }
+
+            .cookie-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cookie-actions {
+                width: 100%;
+            }
         }
 
         @media (max-width: 480px) {
             .hero {
                 padding-bottom: 22px;
+            }
+
+            .cookie-banner {
+                bottom: 12px;
+                padding: 12px;
+            }
+
+            .cookie-manage {
+                bottom: 12px;
+                left: 12px;
             }
         }
     </style>
@@ -983,7 +1095,8 @@
                         </p>
                         <ul style="margin-top:6px; padding-left:18px;">
                             <li>rendere il sostegno scolastico accessibile e strutturato per le famiglie;</li>
-                            <li>offrire percorsi educativi continuativi o occasionali, che accompagnino i ragazzi nel tempo;</li>
+                            <li>offrire percorsi educativi continuativi, non occasionali, che accompagnino i ragazzi nel tempo;</li>
+                            <li>lavorare in rete con scuole, enti e servizi del territorio per costruire esperienze condivise;</li>
                             <li>valorizzare le potenzialità di ciascuno, rispettando ritmi e bisogni individuali.</li>
                         </ul>
                         <p style="margin-top:10px;">
@@ -1025,8 +1138,10 @@
                 <div class="section-body two-column">
                     <div>
                         <div class="contact-highlight">
-                            Per informazioni su orari, disponibilità, costi e tipologie di percorsi, puoi contattarci direttamente tramite telefono o email. Siamo disponibili per
-                            un primo colloquio conoscitivo, senza impegno, per ascoltare i bisogni e proporre un percorso adeguato.
+                            Per informazioni su orari, disponibilità, costi e tipologie di percorsi (individuali o di
+                            gruppo), puoi contattarci direttamente tramite telefono o email. Siamo disponibili per
+                            un primo colloquio conoscitivo, senza impegno, per ascoltare i bisogni e proporre un
+                            percorso adeguato.
                         </div>
                         <p style="margin-top:10px;">
                             Durante l’anno scolastico le attività si svolgono prevalentemente nel pomeriggio, con
@@ -1074,9 +1189,132 @@
     </footer>
 </div>
 
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
+    <div class="cookie-text">
+        <strong>Usiamo cookie tecnici e, con il tuo consenso, Google Analytics</strong> per misurare
+        le visite in forma aggregata e anonimizzata. Puoi rifiutare o modificare la scelta in
+        qualsiasi momento da questo banner. <a href="./privacy.html">Privacy Policy</a>
+    </div>
+    <div class="cookie-actions">
+        <button class="cookie-btn" id="cookieReject">Rifiuta</button>
+        <button class="cookie-btn primary" id="cookieAccept">Accetta</button>
+    </div>
+</div>
+<button class="cookie-manage" id="cookieManage" type="button">Impostazioni cookie</button>
+
 <script>
     // Anno automatico footer
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Cookie banner / Google Analytics
+    const GA_MEASUREMENT_ID = 'G-E2C088Q8M9';                                                                                                                       //codice google qui. 
+    const GA_DISABLED_FLAG = GA_MEASUREMENT_ID ? `ga-disable-${GA_MEASUREMENT_ID}` : null;
+    const CONSENT_KEY = 'cookie-consent';
+    const cookieBanner = document.getElementById('cookieBanner');
+    const cookieManage = document.getElementById('cookieManage');
+    const cookieAccept = document.getElementById('cookieAccept');
+    const cookieReject = document.getElementById('cookieReject');
+    let analyticsLoaded = false;
+
+    function showCookieBanner() {
+        if (cookieBanner) {
+            cookieBanner.classList.add('visible');
+        }
+        if (cookieManage) {
+            cookieManage.classList.remove('visible');
+        }
+    }
+
+    function hideCookieBanner() {
+        if (cookieBanner) {
+            cookieBanner.classList.remove('visible');
+        }
+    }
+
+    function toggleManageButton(visible) {
+        if (!cookieManage) return;
+        cookieManage.classList.toggle('visible', Boolean(visible));
+    }
+
+    function clearAnalyticsCookies() {
+        const analyticsCookies = ['_ga', '_gid', '_gat', `_ga_${GA_MEASUREMENT_ID?.replace('G-', '') || ''}`];
+        analyticsCookies.forEach(function (cookieName) {
+            if (!cookieName) return;
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        });
+    }
+
+    function setAnalyticsDisabled(disabled) {
+        if (!GA_DISABLED_FLAG) return;
+        window[GA_DISABLED_FLAG] = Boolean(disabled);
+        if (disabled) {
+            clearAnalyticsCookies();
+        }
+    }
+
+    function loadGoogleAnalytics() {
+        if (analyticsLoaded) return;
+        if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
+            console.warn('Imposta GA_MEASUREMENT_ID per attivare Google Analytics.');
+            return;
+        }
+        analyticsLoaded = true;
+        setAnalyticsDisabled(false);
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = window.gtag || gtag;
+        gtag('js', new Date());
+        gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+    }
+
+    function applyConsent(status) {
+        if (status === 'accepted') {
+            loadGoogleAnalytics();
+            hideCookieBanner();
+            toggleManageButton(true);
+        } else if (status === 'rejected') {
+            setAnalyticsDisabled(true);
+            hideCookieBanner();
+            toggleManageButton(true);
+        }
+    }
+
+    if (cookieAccept) {
+        cookieAccept.addEventListener('click', function () {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            applyConsent('accepted');
+        });
+    }
+
+    if (cookieReject) {
+        cookieReject.addEventListener('click', function () {
+            localStorage.setItem(CONSENT_KEY, 'rejected');
+            applyConsent('rejected');
+        });
+    }
+
+    if (cookieManage) {
+        cookieManage.addEventListener('click', function () {
+            showCookieBanner();
+        });
+    }
+
+    (function initConsent() {
+        setAnalyticsDisabled(true);
+        const saved = localStorage.getItem(CONSENT_KEY);
+        if (saved === 'accepted') {
+            applyConsent('accepted');
+        } else if (saved === 'rejected') {
+            applyConsent('rejected');
+        } else {
+            showCookieBanner();
+        }
+    })();
 
     // Smooth scroll
     function smoothScrollTo(target) {
