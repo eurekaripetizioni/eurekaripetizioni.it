@@ -342,28 +342,12 @@
             nominati quali responsabili del trattamento, ove necessario.
         </p>
 
-        <h2>7. Luogo del trattamento e fornitori esterni</h2>
-        <p>
-            Il sito <strong>eurekaripetizioni.it</strong> è ospitato tramite servizi di hosting statico (GitHub Pages) e
-            protetto tramite servizi di proxy e sicurezza (Cloudflare). Tali fornitori possono trattare alcuni dati
-            tecnici di navigazione (es. log, informazioni sull’IP, dati di sicurezza).
-        </p>
-        <p>
-            L’infrastruttura dei fornitori può risiedere anche in Paesi extra-UE. In tali casi, il trasferimento avviene
-            sulla base di strumenti giuridici conformi al GDPR, quali decisioni di adeguatezza della Commissione Europea
-            e/o clausole contrattuali standard.
-        </p>
-        <p>
-            Per la gestione della posta elettronica, il Titolare si avvale di un provider di servizi email che tratta i
-            dati in qualità di responsabile del trattamento o di autonomo titolare, secondo la propria informativa.
-        </p>
-
-        <h2>8. Destinatari dei dati</h2>
+        <h2>7. Destinatari dei dati</h2>
         <p>
             I dati personali possono essere comunicati, nei limiti delle finalità sopra indicate, a:
         </p>
         <ul>
-            <li>fornitori di servizi informatici, hosting, manutenzione e sicurezza (es. GitHub, Cloudflare);</li>
+            <li>fornitori di servizi informatici, hosting, manutenzione e sicurezza (es. Cloudflare);</li>
             <li>fornitori di servizi di posta elettronica;</li>
             <li>consulenti o professionisti che assistono l’associazione per adempimenti amministrativi, contabili o legali;</li>
             <li>autorità competenti, qualora ciò sia richiesto dalla legge o da un ordine dell’autorità.</li>
@@ -372,7 +356,7 @@
             I dati non sono diffusi pubblicamente e non vengono ceduti a terzi per finalità di marketing autonomo.
         </p>
 
-        <h2>9. Periodo di conservazione dei dati</h2>
+        <h2>8. Periodo di conservazione dei dati</h2>
         <ul>
             <li>
                 <strong>Dati di navigazione e log tecnici:</strong> conservati per periodi limitati, strettamente
@@ -386,7 +370,7 @@
             </li>
         </ul>
 
-        <h2>10. Trattamento dei dati di minori</h2>
+        <h2>9. Trattamento dei dati di minori</h2>
         <p>
             Le attività dell’associazione si rivolgono anche a studenti minorenni; tuttavia, il sito è destinato in
             primo luogo a genitori, tutori e adulti di riferimento. È possibile che un minore contatti direttamente
@@ -397,7 +381,7 @@
             coinvolgimento del genitore o del tutore legale per la prosecuzione del rapporto o la fornitura del servizio.
         </p>
 
-        <h2>11. Diritti degli interessati</h2>
+        <h2>10. Diritti degli interessati</h2>
         <p>
             In qualità di interessato, l’utente può esercitare in qualsiasi momento i diritti previsti dagli artt. 15–22
             del GDPR, tra cui:
@@ -457,7 +441,7 @@
 
 <script>
     // Cookie banner / Google Analytics
-    const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: sostituisci con il tuo ID (es. G-ABCDEF1234)
+    const GA_MEASUREMENT_ID = 'G-E2C088Q8M9';
     const GA_DISABLED_FLAG = GA_MEASUREMENT_ID ? `ga-disable-${GA_MEASUREMENT_ID}` : null;
     const CONSENT_KEY = 'cookie-consent';
     const cookieBanner = document.getElementById('cookieBanner');
@@ -465,6 +449,19 @@
     const cookieAccept = document.getElementById('cookieAccept');
     const cookieReject = document.getElementById('cookieReject');
     let analyticsLoaded = false;
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = window.gtag || gtag;
+
+    // Google Consent Mode v2 (default: nessun consenso)
+    gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+    });
 
     function showCookieBanner() {
         if (cookieBanner) {
@@ -515,19 +512,28 @@
         script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
         document.head.appendChild(script);
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        window.gtag = window.gtag || gtag;
         gtag('js', new Date());
         gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
     }
 
     function applyConsent(status) {
         if (status === 'accepted') {
+            gtag('consent', 'update', {
+                ad_storage: 'granted',
+                analytics_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted'
+            });
             loadGoogleAnalytics();
             hideCookieBanner();
             toggleManageButton(true);
         } else if (status === 'rejected') {
+            gtag('consent', 'update', {
+                ad_storage: 'denied',
+                analytics_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+            });
             setAnalyticsDisabled(true);
             hideCookieBanner();
             toggleManageButton(true);
