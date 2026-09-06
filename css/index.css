@@ -363,6 +363,25 @@ main { flex: 1; }
     animation-play-state: paused;
 }
 
+/* Con JS: lo scorrimento (auto + trascinamento manuale) è gestito da index.js.
+   Nessuna barra di scorrimento: si usa solo transform, mai overflow:scroll. */
+.js-enabled .subjects-marquee {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.js-enabled .subjects-strip {
+    animation: none;
+    cursor: grab;
+    /* i gesti orizzontali sono nostri, quelli verticali scorrono la pagina */
+    touch-action: pan-y;
+    will-change: transform;
+}
+
+.js-enabled .subjects-strip.dragging {
+    cursor: grabbing;
+}
+
 .subjects-row {
     display: flex;
     align-items: center;
@@ -424,19 +443,24 @@ main { flex: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .subjects-marquee {
+    /* Senza JS: niente animazione, voci mandate a capo */
+    html:not(.js-enabled) .subjects-marquee {
         -webkit-mask-image: none;
         mask-image: none;
         align-items: center;
     }
-    .subjects-strip {
+    html:not(.js-enabled) .subjects-strip {
         animation: none;
         width: 100%;
         flex-wrap: wrap;
         justify-content: center;
     }
-    .subjects-strip .subjects-row[aria-hidden] { display: none; }
-    .subjects-row { flex-wrap: wrap; justify-content: center; }
+    html:not(.js-enabled) .subjects-strip .subjects-row[aria-hidden] { display: none; }
+    html:not(.js-enabled) .subjects-row { flex-wrap: wrap; justify-content: center; }
+
+    /* Con JS: la striscia resta orizzontale e trascinabile, ma non si muove
+       da sola — solo su input dell'utente. */
+    .js-enabled .subjects-strip { animation: none; }
 }
 
 /* =========================== SEZIONI ================================== */
@@ -1304,7 +1328,7 @@ main { flex: 1; }
         justify-self: stretch;
         z-index: 25;
         margin: 0;
-        padding: 64px var(--space-lg) var(--space-lg);
+        padding: 80px var(--space-lg) var(--space-lg);
         border: none;
         background: var(--bg-primary);
         flex-direction: column;
@@ -1314,18 +1338,20 @@ main { flex: 1; }
         overflow-y: auto;
     }
 
-    /* Menu full-screen in stile Apple: voci tutte uguali, semibold, allineate a sinistra */
+    /* Menu full-screen in stile Apple: voci grandi, semibold, allineate a sinistra,
+       con ampia area di tocco */
     .nav-links.open .nav-link {
         width: 100%;
         justify-content: flex-start;
         text-align: left;
-        font-size: 23px;
+        font-size: clamp(28px, 8vw, 36px);
         font-weight: 600;
-        letter-spacing: -0.015em;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
         color: var(--text-primary);
         background: transparent;
         border-radius: 0;
-        padding: 4px 0;
+        padding: 16px 0;
         margin: 0;
     }
 

@@ -64,6 +64,15 @@ top of `index.html` (`#ic-*`), referenced with `<use href="#ic-…">`. Section-h
 files in `icons/`. Brand/social glyphs are inline `<path>` (Instagram/Facebook use canonical
 Simple Icons paths).
 
+**Subject marquee.** `.subjects-marquee` has two `.subjects-strip`s (content duplicated once
+per strip for a seamless loop). Without JS: pure CSS `@keyframes subjectsScroll` (0 → −50%).
+With `.js-enabled`: `js/index.js` disables the animation and runs one `requestAnimationFrame`
+loop **per strip**, each with its own state — auto-scroll at ±22 px/s, pointer drag with
+release momentum (friction 0.9/frame), horizontal wheel, and hover-pause on `(hover: hover)`
+devices. Independence is the point: dragging one strip must never touch the other's state.
+Position is a wrapped `translate3d` (never `overflow: scroll`) so there are no scrollbars;
+`touch-action: pan-y` keeps vertical page scroll working on touch.
+
 **Email links** point to Gmail compose URLs
 (`https://mail.google.com/mail/?view=cm&fs=1&to=info@eurekaripetizioni.it&su=…`,
 `target="_blank"`), **not** `mailto:` — a deliberate choice so desktop clicks reliably open a
@@ -73,7 +82,15 @@ compose window. Phone/WhatsApp use `https://wa.me/393513712990`.
 `prefers-reduced-motion` block that neutralises them — keep new animations within that budget
 and covered by the reduced-motion guard.
 
-**SEO.** Both pages carry `<link rel="canonical">`, Open Graph / Twitter meta, and JSON-LD
+**App / PWA + favicon.** `favicon.png` (tab icon), `apple-touch-icon.png` (180),
+`icon-192.png`, `icon-512.png` and `manifest.webmanifest` are all the **full logo on an opaque
+white square** — same square source, not cropped or masked. The home-screen label is pinned to
+"Eureka! APS" via `apple-mobile-web-app-title` on both pages. `logo.png` (the separate nav-brand
+/ OG / JSON-LD image) is unrelated — don't swap it for these.
+
+**SEO.** The home `<title>` is just "Eureka! APS" (client's choice); the keyword-rich phrasing
+lives in `meta description`, `og:title` and the JSON-LD `name`, not the title tag. Both pages
+carry `<link rel="canonical">`, Open Graph / Twitter meta, and JSON-LD
 (`index.html`: `EducationalOrganization` + `WebSite` + `WebPage` in an `@graph`, with the two
 sedi as `Place` nodes and `@id` `…/#organization` / `…/#website` referenced from `privacy.html`).
 `robots.txt` + `sitemap.xml` at the root use absolute `https://eurekaripetizioni.it/` URLs — if

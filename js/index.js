@@ -263,3 +263,111 @@ if (waFab && heroWrapper) {
     }, { threshold: 0 });
     fabObserver.observe(heroWrapper);
 }
+
+// ===================== MATERIE: scorrimento auto + trascinamento manuale =====================
+// Ogni striscia ha il proprio stato e il proprio loop: trascinarne una NON
+// ferma l'altra. Nessuna barra di scorrimento: solo transform, mai overflow.
+(function subjectsMarquee() {
+    const strips = document.querySelectorAll('.subjects-marquee .subjects-strip');
+    if (!strips.length || !('requestAnimationFrame' in window)) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    strips.forEach(function (strip) {
+        const reverse = strip.classList.contains('subjects-strip--reverse');
+        const baseSpeed = (reverse ? 1 : -1) * 22;   // px/s, senso opposto tra le due strisce
+        let half = strip.scrollWidth / 2 || 1;       // larghezza di un set (il contenuto è duplicato)
+        let offset = 0;
+        let paused = false;
+        let dragging = false;
+        let activePointer = null;
+        let startX = 0;
+        let startOffset = 0;
+        let lastX = 0;
+        let lastT = 0;
+        let vel = 0;                                  // velocità residua (inerzia dopo il rilascio)
+        let last = performance.now();
+
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(function () {
+                const h = strip.scrollWidth / 2;
+                if (h > 0) half = h;
+            }).observe(strip);
+        }
+
+        // mantiene l'offset nell'intervallo (-half, 0] → giro senza salti
+        function wrap(x) {
+            x %= half;
+            if (x > 0) x -= half;
+            return x;
+        }
+
+        function frame(now) {
+            const dt = Math.min((now - last) / 1000, 0.05);
+            last = now;
+
+            if (!dragging) {
+                const auto = (paused || reduce) ? 0 : baseSpeed;
+                offset = wrap(offset + (auto + vel) * dt);
+                // attrito sull'inerzia, poi si torna dolcemente all'auto-scroll
+                vel *= Math.pow(0.9, dt * 60);
+                if (Math.abs(vel) < 1) vel = 0;
+            }
+
+            strip.style.transform = 'translate3d(' + offset.toFixed(2) + 'px,0,0)';
+            requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+
+        // --- trascinamento (pointer: mouse + touch + penna) ---
+        strip.addEventListener('pointerdown', function (e) {
+            if (e.button != null && e.button > 0) return;
+            dragging = true;
+            activePointer = e.pointerId;
+            startX = lastX = e.clientX;
+            startOffset = offset;
+            lastT = performance.now();
+            vel = 0;
+            try { strip.setPointerCapture(activePointer); } catch (_) {}
+            strip.classList.add('dragging');
+        });
+
+        strip.addEventListener('pointermove', function (e) {
+            if (!dragging || e.pointerId !== activePointer) return;
+            offset = wrap(startOffset + (e.clientX - startX));
+            const t = performance.now();
+            const span = t - lastT;
+            if (span > 0) vel = ((e.clientX - lastX) / span) * 1000;
+            lastX = e.clientX;
+            lastT = t;
+        });
+
+        function endDrag(e) {
+            if (!dragging || (e && e.pointerId !== activePointer)) return;
+            dragging = false;
+            try { strip.releasePointerCapture(activePointer); } catch (_) {}
+            activePointer = null;
+            strip.classList.remove('dragging');
+            // trascinamento lento → nessun lancio, riparte subito l'auto-scroll
+            if (Math.abs(vel) < Math.abs(baseSpeed)) vel = 0;
+        }
+        strip.addEventListener('pointerup', endDrag);
+        strip.addEventListener('pointercancel', endDrag);
+
+        // --- rotellina / trackpad: solo il gesto orizzontale scorre la striscia,
+        //     quello verticale resta alla pagina ---
+        strip.addEventListener('wheel', function (e) {
+            if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+            e.preventDefault();
+            offset = wrap(offset - e.deltaX);
+            vel = 0;
+        }, { passive: false });
+
+        // --- pausa al passaggio del mouse, solo su desktop e solo per QUESTA striscia ---
+        if (canHover) {
+            strip.addEventListener('pointerenter', function () { paused = true; });
+            strip.addEventListener('pointerleave', function () { if (!dragging) paused = false; });
+        }
+    });
+})();
