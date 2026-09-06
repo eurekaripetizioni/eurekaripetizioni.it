@@ -143,19 +143,14 @@ header {
 
 .nav-title {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     line-height: 1.2;
 }
 
-.nav-title span:first-child {
+.nav-title span {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: -0.01em;
-}
-
-.nav-title span:last-child {
-    font-size: 10px;
-    color: var(--text-secondary);
 }
 
 .nav-links {
@@ -1358,7 +1353,13 @@ main { flex: 1; }
     body.nav-open { overflow: hidden; }
 
     .nav-toggle { display: block; }
-    .nav { position: relative; }
+    /* niente colonna centrale (menu nascosto): il brand prende tutto lo spazio
+       disponibile a sinistra del pulsante, così logo e testo respirano */
+    .nav { position: relative; grid-template-columns: 1fr auto; }
+
+    /* Brand più leggibile da mobile: logo e testo più grandi */
+    .logo-img { height: 46px; }
+    .nav-title span { font-size: 18px; }
 
     .section-inner { border-radius: var(--radius-lg); padding: var(--space-md); }
     .section-inner--bare { padding: 0; }
