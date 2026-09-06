@@ -4,6 +4,22 @@
    Font di sistema, neutri per il 90% della superficie, accento blu solo
    sulle azioni. Elevazione suggerita (bordo quasi invisibile + ombra
    diffusa), mai dichiarata.
+
+   INDICE (cerca la stringa "=== NOME ===" per saltare alla sezione)
+     :root / dark          — token di colore, spaziatura, forma
+     HEADER                — barra sticky, nav, menu mobile full-screen
+     HERO                  — titolo, CTA, scroll indicator
+     MATERIE               — strisce scorrevoli (auto + trascinamento in index.js)
+     SEZIONI               — impaginazione comune, .pill, .section-*
+     CHI SIAMO / OBIETTIVI / PROGRAMMI / CONTATTI — blocchi specifici
+     FOOTER · COOKIE BANNER · WHATSAPP FLOATING BUTTON
+     ANIMAZIONI            — keyframe + reveal-on-scroll
+     RESPONSIVE            — @media (max-width: 768px / 480px)
+
+   NB: file unico di proposito. Niente build step (vedi CLAUDE.md): spezzarlo
+   in più file significherebbe più richieste HTTP o un bundler. 33 KB → ~7 KB
+   gzip, una sola richiesta: non è un problema di peso, solo di navigazione
+   nell'editor — da qui l'indice qui sopra.
    ========================================================================= */
 
 :root {
@@ -136,21 +152,9 @@ header {
 .nav-brand:hover { opacity: 0.7; }
 
 .logo-img {
-    height: 34px;
+    height: 38px;
     width: auto;
     display: block;
-}
-
-.nav-title {
-    display: flex;
-    align-items: center;
-    line-height: 1.2;
-}
-
-.nav-title span {
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: -0.01em;
 }
 
 .nav-links {
@@ -532,12 +536,6 @@ main { flex: 1; }
 }
 
 .section-body strong { color: var(--text-primary); }
-
-.two-column {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg);
-}
 
 .pill {
     display: inline-flex;
@@ -1323,7 +1321,7 @@ main { flex: 1; }
         justify-self: stretch;
         z-index: 25;
         margin: 0;
-        padding: 80px var(--space-lg) var(--space-lg);
+        padding: 92px var(--space-lg) var(--space-lg);
         border: none;
         background: var(--bg-primary);
         flex-direction: column;
@@ -1352,18 +1350,22 @@ main { flex: 1; }
 
     body.nav-open { overflow: hidden; }
 
-    .nav-toggle { display: block; }
-    /* niente colonna centrale (menu nascosto): il brand prende tutto lo spazio
-       disponibile a sinistra del pulsante, così logo e testo respirano */
-    .nav { position: relative; grid-template-columns: 1fr auto; }
+    .nav-toggle { display: block; }   /* dimensione invariata: 44 × 44 */
 
-    /* Brand più leggibile da mobile: logo e testo più grandi */
-    .logo-img { height: 46px; }
-    .nav-title span { font-size: 18px; }
+    /* Header più alto da mobile per ospitare un logo più grande.
+       niente colonna centrale (menu nascosto): logo a sinistra, pulsante a destra. */
+    .nav {
+        position: relative;
+        grid-template-columns: 1fr auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        min-height: 68px;
+    }
+
+    .logo-img { height: 52px; }
 
     .section-inner { border-radius: var(--radius-lg); padding: var(--space-md); }
     .section-inner--bare { padding: 0; }
-    .two-column { grid-template-columns: minmax(0, 1fr); }
     .contact { max-width: 100%; }
     .about-points { grid-template-columns: minmax(0, 1fr); }
     .programs { grid-template-columns: minmax(0, 1fr); }
