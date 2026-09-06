@@ -1,874 +1,152 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eureka! APS – Your future in your hands</title>
-    <meta name="description" content="Eureka! APS è un'associazione di promozione sociale senza scopo di lucro che offre supporto didattico, doposcuola e ripetizioni per studenti di ogni ordine e grado a Pomezia e Aprilia.">
-    <style>
-        :root {
-            --bg-page: #ffffff;
-            --bg-soft: #f9fafb;
-            --card-bg: #ffffff;
-            --accent: #2563eb;
-            --accent-soft: rgba(37, 99, 235, 0.08);
-            --accent-strong: #1d4ed8;
-            --text-main: #111827;
-            --text-muted: #374151;
-            --border-subtle: rgba(209, 213, 219, 0.9);
-            --radius-lg: 18px;
-            --radius-full: 999px;
-            --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
-            --max-width: 1024px;
-            --transition-fast: 0.16s ease-out;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
-            background: var(--bg-page);
-            color: var(--text-main);
-            -webkit-font-smoothing: antialiased;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .page-shell {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-page);
-        }
-
-        /* HEADER */
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.96);
-            border-bottom: 1px solid rgba(209, 213, 219, 0.8);
-        }
-
-        .nav {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-            border-radius: 0;
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
-        }
-
-        .nav-title {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-title span:first-child {
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        .nav-title span:last-child {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .nav-link {
-            padding: 6px 10px;
-            border-radius: var(--radius-full);
-            border: 1px solid transparent;
-            cursor: pointer;
-            background: transparent;
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: all var(--transition-fast);
-        }
-
-        .nav-link:hover {
-            color: var(--text-main);
-            border-color: rgba(156, 163, 175, 0.8);
-            background: rgba(248, 250, 252, 0.9);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-        }
-
-        .nav-cta {
-            padding: 7px 14px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: linear-gradient(120deg, #2563eb, #60a5fa);
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45);
-            white-space: nowrap;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 18px 42px rgba(37, 99, 235, 0.6);
-            filter: brightness(1.05);
-        }
-
-        .nav-toggle {
-            display: none;
-            border: 1px solid rgba(156, 163, 175, 0.8);
-            background: #ffffff;
-            border-radius: var(--radius-full);
-            padding: 6px 10px;
-            color: var(--text-muted);
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        /* HERO */
-
-        .hero-wrapper {
-            background: linear-gradient(to bottom, #f9fafb 0, #ffffff 40%);
-            border-bottom: 1px solid rgba(229, 231, 235, 0.9);
-        }
-
-        .hero {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 28px 16px 26px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border-radius: var(--radius-full);
-            padding: 4px 10px 4px 4px;
-            border: 1px solid rgba(156, 163, 175, 0.8);
-            background: #ffffff;
-            font-size: 11px;
-            color: var(--text-muted);
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
-        }
-
-        .hero-badge-dot {
-            width: 18px;
-            height: 18px;
-            border-radius: var(--radius-full);
-            background: radial-gradient(circle at 30% 0%, #22c55e, #16a34a 50%, #bbf7d0 100%);
-            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.7);
-        }
-
-        .hero-title {
-            font-size: clamp(30px, 4vw, 40px);
-            line-height: 1.07;
-            font-weight: 700;
-            margin: 16px 0 10px;
-        }
-
-        .hero-title span {
-            color: var(--accent-strong);
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .hero-subsubtitle {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .hero-intro {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-muted);
-            max-width: 42rem;
-        }
-
-        .hero-intro strong {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            align-items: center;
-        }
-
-        .btn-primary {
-            padding: 9px 16px;
-            border-radius: var(--radius-full);
-            border: none;
-            background: linear-gradient(120deg, #2563eb, #60a5fa);
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 14px 34px rgba(37, 99, 235, 0.45);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
-        }
-
-        .btn-primary span {
-            font-size: 18px;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 48px rgba(37, 99, 235, 0.65);
-            filter: brightness(1.06);
-        }
-
-        .btn-ghost {
-            padding: 9px 14px;
-            border-radius: var(--radius-full);
-            border: 1px solid rgba(156, 163, 175, 0.9);
-            background: #ffffff;
-            color: var(--text-muted);
-            font-size: 13px;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
-        }
-
-        .btn-ghost:hover {
-            background: #f9fafb;
-            color: var(--text-main);
-            transform: translateY(-1px);
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-        }
-
-        .hero-note {
-            margin-top: 14px;
-            font-size: 12px;
-            color: var(--text-muted);
-            border-radius: var(--radius-full);
-            padding: 7px 12px;
-            background: #ffffff;
-            border: 1px dashed rgba(156, 163, 175, 0.9);
-            max-width: 520px;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
-        }
-
-        /* MINI BOX CONTATTI NELL'HERO */
-
-        .hero-contact-strip {
-            margin-top: 18px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .hero-contact-card {
-            flex: 1 1 220px;
-            min-width: 220px;
-            padding: 10px 12px;
-            border-radius: 14px;
-            background: #ffffff;
-            border: 1px solid rgba(209, 213, 219, 0.9);
-            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
-            font-size: 13px;
-            color: var(--text-muted);
-            display: grid;
-            gap: 4px;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-        }
-
-        .hero-contact-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 48px rgba(37, 99, 235, 0.16);
-            border-color: rgba(37, 99, 235, 0.55);
-        }
-
-        .hero-contact-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--text-muted);
-        }
-
-        .hero-contact-value a {
-            text-decoration: underline;
-            text-decoration-style: dotted;
-            text-decoration-thickness: 1px;
-            text-underline-offset: 2px;
-            color: var(--accent-strong);
-            font-weight: 500;
-        }
-
-        .hero-contact-value a:hover {
-            color: #1e40af;
-        }
-
-        /* SEZIONI */
-
-        .section {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 16px 16px 26px;
-        }
-
-        .section-inner {
-            background: var(--bg-soft);
-            border-radius: 22px;
-            border: 1px solid var(--border-subtle);
-            padding: 20px;
-            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section-inner::before {
-            content: "";
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 140px;
-            height: 140px;
-            border-radius: 999px;
-            background: radial-gradient(circle at 30% 0%, rgba(37, 99, 235, 0.14), transparent 70%);
-            pointer-events: none;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            align-items: baseline;
-            margin-bottom: 12px;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .section-kicker {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--text-muted);
-        }
-
-        .section-body {
-            font-size: 14px;
-            line-height: 1.7;
-            color: var(--text-muted);
-            position: relative;
-        }
-
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 9px;
-            border-radius: var(--radius-full);
-            border: 1px solid rgba(209, 213, 219, 0.9);
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            background: #ffffff;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
-        }
-
-        .pill-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: var(--radius-full);
-            background: #2563eb;
-        }
-
-        /* OBIETTIVI */
-
-        .objectives-list {
-            margin-top: 10px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 10px;
-        }
-
-        .objective-item {
-            padding: 10px 12px;
-            border-radius: 14px;
-            background: #ffffff;
-            border: 1px solid rgba(209, 213, 219, 0.9);
-            font-size: 13px;
-            color: var(--text-muted);
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
-            position: relative;
-            overflow: hidden;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-        }
-
-        .objective-item::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -20%;
-            width: 140%;
-            height: 38%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
-            pointer-events: none;
-        }
-
-        .objective-item strong {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 13px;
-            color: var(--text-main);
-        }
-
-        .objective-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 46px rgba(15, 23, 42, 0.12);
-            border-color: rgba(37, 99, 235, 0.55);
-        }
-
-        /* SEDI VISIBILI */
-
-        .cards-grid {
-            margin-top: 12px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 12px;
-        }
-
-        .card {
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 14px 14px 12px;
-            border: 1px solid rgba(209, 213, 219, 0.9);
-            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-            position: relative;
-            overflow: hidden;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -20%;
-            width: 140%;
-            height: 40%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), transparent);
-            pointer-events: none;
-        }
-
-        .card-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            margin-bottom: 6px;
-            position: relative;
-        }
-
-        .card-title {
-            position: relative;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--accent-strong);
-        }
-
-        .card-address {
-            position: relative;
-            font-size: 13px;
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 24px 60px rgba(37, 99, 235, 0.2);
-            border-color: rgba(37, 99, 235, 0.7);
-            background: #fefefe;
-        }
-
-        .card-actions {
-            position: relative;
-            margin-top: 4px;
-        }
-
-        .btn-map {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 12px;
-            border-radius: var(--radius-full);
-            border: 1px solid rgba(37, 99, 235, 0.5);
-            background: #ffffff;
-            color: var(--accent-strong);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
-        }
-
-        .btn-map span {
-            font-size: 14px;
-        }
-
-        .btn-map:hover {
-            background: linear-gradient(120deg, #2563eb, #60a5fa);
-            color: #ffffff;
-            box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
-            transform: translateY(-1px);
-            border-color: transparent;
-        }
-
-        /* MAPPA */
-
-        .map-wrapper {
-            margin-top: 18px;
-            border-radius: 18px;
-            background: #ffffff;
-            border: 1px solid rgba(209, 213, 219, 0.9);
-            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
-            padding: 12px;
-            position: relative;
-        }
-
-        .map-header {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-main);
-        }
-
-        .map-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .map-frame-wrapper {
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(209, 213, 219, 0.9);
-        }
-
-        #mapFrame {
-            width: 100%;
-            height: 260px;
-            border: 0;
-        }
-
-        /* COLONNE / CONTATTI */
-
-        .two-column {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-            gap: 12px;
-        }
-
-        .contact-highlight {
-            margin-top: 10px;
-            padding: 12px;
-            border-radius: 16px;
-            background: var(--accent-soft);
-            border: 1px solid rgba(37, 99, 235, 0.35);
-            font-size: 14px;
-            color: var(--text-muted);
-            box-shadow: 0 14px 32px rgba(37, 99, 235, 0.12);
-        }
-
-        .contact-highlight a {
-            text-decoration: underline;
-            text-decoration-style: dotted;
-            text-decoration-thickness: 1px;
-        }
-
-        .contact-data {
-            display: grid;
-            gap: 8px;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-
-        .contact-row-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--text-muted);
-        }
-
-        .contact-row-value a {
-            text-decoration: underline;
-            text-decoration-style: solid;
-            text-underline-offset: 2px;
-            color: var(--accent-strong);
-            font-weight: 500;
-            transition: color var(--transition-fast);
-        }
-
-        .contact-row-value a:hover {
-            color: #1e40af;
-        }
-
-        footer {
-            border-top: 1px solid rgba(209, 213, 219, 0.9);
-            margin-top: 20px;
-            background: #ffffff;
-        }
-
-        .footer-inner {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 12px 16px 20px;
-            font-size: 11px;
-            color: var(--text-muted);
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .footer-inner a {
-            text-decoration: underline;
-            text-decoration-style: dotted;
-            text-decoration-thickness: 1px;
-        }
-
-        /* COOKIE BANNER */
-
-        .cookie-banner {
-            position: fixed;
-            bottom: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(960px, calc(100% - 20px));
-            background: #ffffff;
-            color: var(--text-main);
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
-            padding: 14px 16px;
-            display: none;
-            gap: 12px;
-            align-items: center;
-            z-index: 50;
-        }
-
-        .cookie-banner.visible {
-            display: flex;
-        }
-
-        .cookie-text {
-            flex: 1;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        .cookie-text strong {
-            color: var(--accent-strong);
-        }
-
-        .cookie-text a {
-            color: var(--accent-strong);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        .cookie-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .cookie-btn {
-            padding: 8px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            background: #f8fafc;
-            color: var(--text-main);
-            cursor: pointer;
-            font-size: 13px;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-        }
-
-        .cookie-btn:hover {
-            transform: translateY(-1px);
-            border-color: rgba(37, 99, 235, 0.4);
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
-            background: #ffffff;
-        }
-
-        .cookie-btn.primary {
-            background: linear-gradient(120deg, #2563eb, #60a5fa);
-            border-color: transparent;
-            color: #ffffff;
-        }
-
-        .cookie-manage {
-            position: fixed;
-            bottom: 18px;
-            left: 18px;
-            padding: 7px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(107, 114, 128, 0.6);
-            background: #ffffff;
-            color: #111827;
-            font-size: 12px;
-            cursor: pointer;
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-            display: none;
-            z-index: 45;
-        }
-
-        .cookie-manage.visible {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 52px;
-                right: 12px;
-                padding: 10px;
-                border-radius: 16px;
-                background: #ffffff;
-                border: 1px solid rgba(209, 213, 219, 0.9);
-                flex-direction: column;
-                min-width: 180px;
-                box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+    <title>Ripetizioni e doposcuola a Pomezia e Aprilia — Eureka! APS</title>
+    <meta name="description" content="Doposcuola, ripetizioni individuali e metodo di studio per elementari, medie e superiori a Pomezia e Aprilia. Eureka! APS, associazione di promozione sociale senza scopo di lucro.">
+    <link rel="canonical" href="https://eurekaripetizioni.it/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eureka! APS">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:url" content="https://eurekaripetizioni.it/">
+    <meta property="og:title" content="Ripetizioni e doposcuola a Pomezia e Aprilia — Eureka! APS">
+    <meta property="og:description" content="Doposcuola, ripetizioni individuali e metodo di studio per elementari, medie e superiori a Pomezia e Aprilia.">
+    <meta property="og:image" content="https://eurekaripetizioni.it/logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Ripetizioni e doposcuola a Pomezia e Aprilia — Eureka! APS">
+    <meta name="twitter:description" content="Doposcuola, ripetizioni individuali e metodo di studio a Pomezia e Aprilia.">
+    <meta name="twitter:image" content="https://eurekaripetizioni.it/logo.png">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="stylesheet" href="css/index.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://eurekaripetizioni.it/#organization",
+          "name": "Eureka! APS",
+          "alternateName": "Eureka! – Associazione di Promozione Sociale",
+          "url": "https://eurekaripetizioni.it/",
+          "logo": "https://eurekaripetizioni.it/logo.png",
+          "image": "https://eurekaripetizioni.it/logo.png",
+          "description": "Doposcuola, ripetizioni individuali e metodo di studio per studenti di ogni ordine e grado a Pomezia e Aprilia.",
+          "email": "info@eurekaripetizioni.it",
+          "telephone": "+39-351-371-2990",
+          "taxID": "96583080583",
+          "areaServed": ["Pomezia", "Aprilia", "Roma", "Latina"],
+          "sameAs": [
+            "https://www.instagram.com/eureka_centroripetizioni/",
+            "https://www.facebook.com/Eurekaripetizionipomezia/"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Via Santorre di Santarosa 10/E",
+            "postalCode": "00071",
+            "addressLocality": "Pomezia",
+            "addressRegion": "RM",
+            "addressCountry": "IT"
+          },
+          "location": [
+            {
+              "@type": "Place",
+              "name": "Eureka! APS — Sede di Pomezia",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Via Santorre di Santarosa 10/E",
+                "postalCode": "00071",
+                "addressLocality": "Pomezia",
+                "addressRegion": "RM",
+                "addressCountry": "IT"
+              }
+            },
+            {
+              "@type": "Place",
+              "name": "Eureka! APS — Sede di Aprilia",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Via Meucci 28",
+                "postalCode": "04011",
+                "addressLocality": "Aprilia",
+                "addressRegion": "LT",
+                "addressCountry": "IT"
+              }
             }
-
-            .nav-links.open {
-                display: flex;
-            }
-
-            .nav-cta {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .nav-toggle {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-            }
-
-            .nav {
-                position: relative;
-            }
-
-            .section-inner {
-                border-radius: 18px;
-            }
-
-            .two-column {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .hero-title {
-                font-size: 28px;
-            }
-
-            #mapFrame {
-                height: 220px;
-            }
-
-            .cookie-banner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .cookie-actions {
-                width: 100%;
-            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://eurekaripetizioni.it/#website",
+          "url": "https://eurekaripetizioni.it/",
+          "name": "Eureka! APS",
+          "inLanguage": "it-IT",
+          "publisher": { "@id": "https://eurekaripetizioni.it/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://eurekaripetizioni.it/#webpage",
+          "url": "https://eurekaripetizioni.it/",
+          "name": "Ripetizioni e doposcuola a Pomezia e Aprilia — Eureka! APS",
+          "isPartOf": { "@id": "https://eurekaripetizioni.it/#website" },
+          "about": { "@id": "https://eurekaripetizioni.it/#organization" },
+          "inLanguage": "it-IT"
         }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding-bottom: 22px;
-            }
-
-            .cookie-banner {
-                bottom: 12px;
-                padding: 12px;
-            }
-
-            .cookie-manage {
-                bottom: 12px;
-                left: 12px;
-            }
-        }
-    </style>
+      ]
+    }
+    </script>
 </head>
 <body>
+<!-- Sprite icone materie: definite una volta, richiamate con <use> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ic-mat" viewBox="0 0 24 24"><path d="M4 7h6M7 4v6"/><path d="M14.5 15.5l5 5M19.5 15.5l-5 5"/></symbol>
+    <symbol id="ic-fis" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></symbol>
+    <symbol id="ic-chi" viewBox="0 0 24 24"><path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 17l-5-9V3"/><path d="M7.5 14h9"/></symbol>
+    <symbol id="ic-bio" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14Z"/><path d="M5 19 13 11"/></symbol>
+    <symbol id="ic-inf" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="10" rx="1"/><path d="M2 19h20"/></symbol>
+    <symbol id="ic-rob" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 4v4M3 12v3M21 12v3"/><circle cx="9.5" cy="13" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="ic-ele" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="ic-mec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3.5M12 18.5V22M4.5 7l3 1.7M16.5 15.3l3 1.7M4.5 17l3-1.7M16.5 8.7l3-1.7"/></symbol>
+    <symbol id="ic-tps" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v2a6 6 0 0 1-12 0V8ZM12 16v5"/></symbol>
+    <symbol id="ic-eco" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 20v-5M12 20V8M17 20v-8"/></symbol>
+    <symbol id="ic-fil" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="ic-aiu" viewBox="0 0 24 24"><path d="M4 20l4-1L19 8l-3-3L5 16l-1 4Z"/><path d="M14 7l3 3"/></symbol>
+    <symbol id="ic-uni" viewBox="0 0 24 24"><path d="M3 9l9-4 9 4-9 4-9-4Z"/><path d="M7 11v4c0 1.5 2.5 3 5 3s5-1.5 5-3v-4"/></symbol>
+    <symbol id="ic-en" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">EN</text></symbol>
+    <symbol id="ic-fr" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">FR</text></symbol>
+    <symbol id="ic-es" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">ES</text></symbol>
+    <symbol id="ic-de" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">DE</text></symbol>
+    <symbol id="ic-zh" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor" stroke="none">中</text></symbol>
+    <symbol id="ic-la" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">LA</text></symbol>
+    <symbol id="ic-gr" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="15.5" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">GR</text></symbol>
+</svg>
 <div class="page-shell">
     <header>
         <div class="nav">
-            <div class="nav-brand">
+            <a class="nav-brand" href="#top" data-scroll="#top">
                 <img src="logo.png" alt="Logo Eureka! APS" class="logo-img">
                 <div class="nav-title">
-                    <span>Eureka! APS</span>
+                    <span>Eureka!</span>
                     <span>Your future in your hands</span>
                 </div>
-            </div>
-            <button class="nav-toggle" id="navToggle">
-                Menu
-                <span>☰</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Apri menu" aria-expanded="false">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
             </button>
             <nav class="nav-links" id="navLinks">
-                <button class="nav-link" data-scroll="#obiettivi">Obiettivi</button>
-                <button class="nav-link" data-scroll="#programmi">Programmi e servizi</button>
-                <button class="nav-link" data-scroll="#sedi">Le nostre sedi</button>
-                <button class="nav-link" data-scroll="#chi-siamo">Chi siamo?</button>
-                <button class="nav-cta" data-scroll="#contatti">Contattaci</button>
+                <a class="nav-link" href="#chi-siamo" data-scroll="#chi-siamo">Associazione</a>
+                <a class="nav-link" href="#obiettivi" data-scroll="#obiettivi">Obiettivi</a>
+                <a class="nav-link" href="#programmi" data-scroll="#programmi">Programmi</a>
+                <a class="nav-link" href="#sedi" data-scroll="#sedi">Sedi</a>
+                <a class="nav-link" href="#contatti" data-scroll="#contatti">Contatti</a>
             </nav>
         </div>
     </header>
@@ -878,83 +156,130 @@
             <section class="hero" id="top">
                 <div>
                     <h1 class="hero-title">
-                        Eureka! APS<br>
+                        <span class="brand-eureka">Eureka!</span> APS<br>
                         <span>Your future in your hands</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Associazione di promozione sociale senza scopo di lucro per il supporto didattico e la crescita educativa.
+                        Doposcuola, ripetizioni e metodo di studio a Pomezia e Aprilia.
                     </p>
                     <p class="hero-intro">
-                        <strong>Eureka! APS</strong> è un’associazione che accompagna studenti e famiglie in percorsi
-                        di sostegno allo studio, metodo di studio e orientamento scolastico. Creiamo spazi di
-                        apprendimento sereni e strutturati, in cui i ragazzi possono studiare, fare domande,
-                        recuperare le materie in difficoltà e acquisire maggiore autonomia.
+                        Uno spazio sereno dove studiare, fare domande e recuperare le materie in difficoltà,
+                        con educatori e tutor al fianco di studenti e famiglie.
                     </p>
+
                     <div class="hero-actions">
-                        <button class="btn-primary" data-scroll="#contatti">
-                            Vai ai contatti <span>↘</span>
-                        </button>
-                        <button class="btn-ghost" data-scroll="#programmi">
-                            Scopri programmi e servizi
+                        <a class="hero-btn-primary" href="https://wa.me/393513712990" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.13-2.9-7-1.87-1.87-4.35-2.92-7.02-2.92zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.4c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.25-8.25 8.25zm4.52-6.18c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+                            Scrivici su WhatsApp
+                        </a>
+                        <button class="hero-btn-ghost" data-scroll="#programmi">
+                            Scopri i programmi
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6-1.4-1.4L12.2 12 7.6 7.4z"/></svg>
                         </button>
                     </div>
 
-                    <!-- Mini box contatti subito visibile -->
-                    <div class="hero-contact-strip">
-                        <div class="hero-contact-card">
-                            <div class="hero-contact-label">Cellulare</div>
-                            <div class="hero-contact-value">
-                                <a href="tel:+393513712990">+39 351 371 2990</a>
-                            </div>
+                    <!-- MATERIE: strisce che scorrono lente, visibili subito nell'hero -->
+                    <div class="subjects-marquee" aria-label="Le materie che seguiamo">
+                        <div class="subjects-strip">
+                            <ul class="subjects-row">
+                                <li class="s-mat"><svg class="s-ic"><use href="#ic-mat"/></svg>Matematica</li><li class="s-fis"><svg class="s-ic"><use href="#ic-fis"/></svg>Fisica</li><li class="s-chi"><svg class="s-ic"><use href="#ic-chi"/></svg>Chimica</li><li class="s-bio"><svg class="s-ic"><use href="#ic-bio"/></svg>Biologia</li><li class="s-inf"><svg class="s-ic"><use href="#ic-inf"/></svg>Informatica</li><li class="s-rob"><svg class="s-ic"><use href="#ic-rob"/></svg>Robotica e sistemi</li><li class="s-ele"><svg class="s-ic"><use href="#ic-ele"/></svg>Elettronica ed elettrotecnica</li><li class="s-mec"><svg class="s-ic"><use href="#ic-mec"/></svg>Meccanica</li><li class="s-tps"><svg class="s-ic"><use href="#ic-tps"/></svg>TPSEE</li><li class="s-eco"><svg class="s-ic"><use href="#ic-eco"/></svg>Economia aziendale</li>
+                            </ul>
+                            <ul class="subjects-row" aria-hidden="true">
+                                <li class="s-mat"><svg class="s-ic"><use href="#ic-mat"/></svg>Matematica</li><li class="s-fis"><svg class="s-ic"><use href="#ic-fis"/></svg>Fisica</li><li class="s-chi"><svg class="s-ic"><use href="#ic-chi"/></svg>Chimica</li><li class="s-bio"><svg class="s-ic"><use href="#ic-bio"/></svg>Biologia</li><li class="s-inf"><svg class="s-ic"><use href="#ic-inf"/></svg>Informatica</li><li class="s-rob"><svg class="s-ic"><use href="#ic-rob"/></svg>Robotica e sistemi</li><li class="s-ele"><svg class="s-ic"><use href="#ic-ele"/></svg>Elettronica ed elettrotecnica</li><li class="s-mec"><svg class="s-ic"><use href="#ic-mec"/></svg>Meccanica</li><li class="s-tps"><svg class="s-ic"><use href="#ic-tps"/></svg>TPSEE</li><li class="s-eco"><svg class="s-ic"><use href="#ic-eco"/></svg>Economia aziendale</li>
+                            </ul>
                         </div>
-                        <div class="hero-contact-card">
-                            <div class="hero-contact-label">Email</div>
-                            <div class="hero-contact-value">
-                                <a href="mailto:info@eurekaripetizioni.it">info@eurekaripetizioni.it</a>
-                            </div>
+                        <div class="subjects-strip subjects-strip--reverse">
+                            <ul class="subjects-row">
+                                <li class="s-en"><svg class="s-ic"><use href="#ic-en"/></svg>Inglese</li><li class="s-fr"><svg class="s-ic"><use href="#ic-fr"/></svg>Francese</li><li class="s-es"><svg class="s-ic"><use href="#ic-es"/></svg>Spagnolo</li><li class="s-de"><svg class="s-ic"><use href="#ic-de"/></svg>Tedesco</li><li class="s-zh"><svg class="s-ic"><use href="#ic-zh"/></svg>Cinese</li><li class="s-la"><svg class="s-ic"><use href="#ic-la"/></svg>Latino</li><li class="s-gr"><svg class="s-ic"><use href="#ic-gr"/></svg>Greco</li><li class="s-fil"><svg class="s-ic"><use href="#ic-fil"/></svg>Filosofia</li><li class="s-aiu"><svg class="s-ic"><use href="#ic-aiu"/></svg>Aiuto compiti · elementari e medie</li><li class="s-uni"><svg class="s-ic"><use href="#ic-uni"/></svg>Preparazione esami universitari</li>
+                            </ul>
+                            <ul class="subjects-row" aria-hidden="true">
+                                <li class="s-en"><svg class="s-ic"><use href="#ic-en"/></svg>Inglese</li><li class="s-fr"><svg class="s-ic"><use href="#ic-fr"/></svg>Francese</li><li class="s-es"><svg class="s-ic"><use href="#ic-es"/></svg>Spagnolo</li><li class="s-de"><svg class="s-ic"><use href="#ic-de"/></svg>Tedesco</li><li class="s-zh"><svg class="s-ic"><use href="#ic-zh"/></svg>Cinese</li><li class="s-la"><svg class="s-ic"><use href="#ic-la"/></svg>Latino</li><li class="s-gr"><svg class="s-ic"><use href="#ic-gr"/></svg>Greco</li><li class="s-fil"><svg class="s-ic"><use href="#ic-fil"/></svg>Filosofia</li><li class="s-aiu"><svg class="s-ic"><use href="#ic-aiu"/></svg>Aiuto compiti · elementari e medie</li><li class="s-uni"><svg class="s-ic"><use href="#ic-uni"/></svg>Preparazione esami universitari</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </section>
+            <button class="scroll-indicator" data-scroll="#chi-siamo" aria-label="Scorri per saperne di più">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16.5 4.5 9l1.4-1.4L12 13.7l6.1-6.1L19.5 9z"/></svg>
+            </button>
         </div>
+
+        <!-- CHI SIAMO / MISSION -->
+        <section class="section" id="chi-siamo">
+            <div class="section-inner section-inner--bare">
+                <div class="section-header">
+                    <div class="section-header-main">
+                        <div>
+                            <div class="section-kicker">L'associazione</div>
+                            <h2 class="section-title">Chi siamo</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-body about">
+                    <p class="pill">
+                        <span class="pill-dot"></span>
+                        APS · no profit
+                    </p>
+                    <p class="about-lead">
+                        Crediamo che ogni ragazzo abbia bisogno di tempo, strumenti e relazioni
+                        significative per imparare e crescere con fiducia.
+                    </p>
+                    <ul class="about-points">
+                        <li>Sostegno scolastico accessibile e strutturato</li>
+                        <li>Percorsi continuativi, non occasionali</li>
+                        <li>Rete con scuole ed enti del territorio</li>
+                        <li>Attenzione ai ritmi e ai bisogni di ciascuno</li>
+                    </ul>
+                    <p class="about-meta">
+                        <strong>Eureka! APS</strong> · Via Santorre di Santarosa 10/E, 00071 Pomezia (RM)<br>
+                        Codice Fiscale <strong>96583080583</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <!-- OBIETTIVI SINTETICI -->
         <section class="section" id="obiettivi">
             <div class="section-inner">
                 <div class="section-header">
-                    <div>
-                        <div class="section-kicker">Cosa facciamo</div>
-                        <h2 class="section-title">Obiettivi</h2>
+                    <div class="section-header-main">
+                        <div class="section-header-icon"><img src="icons/goal.svg" alt=""></div>
+                        <div>
+                            <div class="section-kicker">Cosa facciamo</div>
+                            <h2 class="section-title">Obiettivi</h2>
+                        </div>
                     </div>
                 </div>
                 <div class="section-body">
-                    <p><strong>Promuovere il diritto allo studio e il benessere educativo di bambini, ragazzi e famiglie.</strong></p>
-                    <p>
-                        L’associazione nasce con l’intento di offrire uno spazio strutturato, stabile e accessibile dove
-                        studiare, confrontarsi e ricevere un aiuto qualificato nel percorso scolastico. Vogliamo essere
-                        un punto di riferimento sul territorio per chi cerca sostegno concreto, continuità nel tempo e
-                        una relazione educativa basata sull’ascolto.
-                    </p>
-                    <div class="objectives-list">
-                        <div class="objective-item">
-                            <strong>Supporto allo studio</strong>
-                            Accompagnare gli studenti nello svolgimento delle attività scolastiche, nella preparazione
-                            di verifiche ed esami e nella gestione del carico di studio, favorendo autonomia e sicurezza.
+                    <p class="goals-lead">Diritto allo studio e benessere educativo, per ogni ragazzo.</p>
+                    <div class="goals">
+                        <div class="goal-row">
+                            <span class="goal-num">01</span>
+                            <span class="goal-body">
+                                <strong>Supporto allo studio</strong>
+                                <span>Compiti, verifiche e gestione del carico di studio, con autonomia crescente.</span>
+                            </span>
                         </div>
-                        <div class="objective-item">
-                            <strong>Aiuto compiti e recupero</strong>
-                            Offrire un contesto tranquillo e guidato in cui svolgere i compiti, colmare lacune,
-                            chiarire dubbi e consolidare le competenze di base nelle diverse materie.
+                        <div class="goal-row">
+                            <span class="goal-num">02</span>
+                            <span class="goal-body">
+                                <strong>Recupero lacune</strong>
+                                <span>Un contesto tranquillo per chiarire dubbi e consolidare le basi.</span>
+                            </span>
                         </div>
-                        <div class="objective-item">
-                            <strong>Metodo di studio e orientamento</strong>
-                            Sostenere i ragazzi nella costruzione di un metodo di studio efficace e accompagnare famiglie
-                            e studenti nelle scelte scolastiche e formative, con attenzione ai bisogni specifici.
+                        <div class="goal-row">
+                            <span class="goal-num">03</span>
+                            <span class="goal-body">
+                                <strong>Metodo e orientamento</strong>
+                                <span>Un metodo di studio efficace e scelte scolastiche più consapevoli.</span>
+                            </span>
                         </div>
-                        <div class="objective-item">
-                            <strong>Rete con il territorio</strong>
-                            Collaborare con scuole, servizi educativi e realtà locali per costruire percorsi condivisi
-                            e proposte che rispondano ai bisogni reali della comunità.
+                        <div class="goal-row">
+                            <span class="goal-num">04</span>
+                            <span class="goal-body">
+                                <strong>Rete con il territorio</strong>
+                                <span>Collaborazioni con scuole e realtà locali per percorsi condivisi.</span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -963,42 +288,46 @@
 
         <!-- PROGRAMMI E SERVIZI -->
         <section class="section" id="programmi">
-            <div class="section-inner">
+            <div class="section-inner section-inner--bare">
                 <div class="section-header">
-                    <div>
-                        <div class="section-kicker">Come lavoriamo</div>
-                        <h2 class="section-title">Programmi e servizi</h2>
+                    <div class="section-header-main">
+                        <div class="section-header-icon"><img src="icons/rocket.svg" alt=""></div>
+                        <div>
+                            <div class="section-kicker">Come lavoriamo</div>
+                            <h2 class="section-title">Programmi e servizi</h2>
+                        </div>
                     </div>
                 </div>
                 <div class="section-body">
-                    <p>
-                        I nostri interventi sono pensati per essere concreti, personalizzabili e sostenibili per le
-                        famiglie. Di seguito trovi una panoramica delle principali attività promosse da <strong>Eureka! APS</strong>.
-                    </p>
-                    <div class="objectives-list">
-                                                <div class="objective-item">
-                            <strong>Doposcuola e studio assistito</strong>
-                            Spazi di studio in piccoli gruppi, con educatori e tutor che affiancano gli studenti
-                            nello svolgimento dei compiti, nell’organizzazione del lavoro e nella preparazione di
-                            verifiche e interrogazioni.
-                        </div>
-                        <div class="objective-item">
-                            <strong>Ripetizioni individuali</strong>
-                            Percorsi personalizzati sulle principali materie scolastiche (italiano, matematica,
-                            lingue, discipline scientifiche e umanistiche), pensati per recuperare argomenti specifici
-                            o potenziare le competenze.
-                        </div>
-                        <div class="objective-item">
-                            <strong>Colloqui con le famiglie</strong>
-                            MomentI di confronto con i genitori per condividere obiettivi, monitorare l’andamento
-                            scolastico e costruire insieme un progetto educativo realistico e sostenibile.
-                        </div>
+                    <div class="programs">
+                        <article class="program-card">
+                            <span class="program-ic">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5S15 16.7 15 20"/><circle cx="17" cy="9" r="2.3"/><path d="M15.6 14.3c2.5.4 4.4 2.1 4.4 4.7"/></svg>
+                            </span>
+                            <h3>Doposcuola</h3>
+                            <p>Studio assistito in piccoli gruppi, con educatori e tutor.</p>
+                            <div class="program-tags"><span>Piccolo gruppo</span><span>Pomeriggio</span></div>
+                        </article>
+                        <article class="program-card">
+                            <span class="program-ic">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M6 20c0-3.3 2.7-5.5 6-5.5S18 16.7 18 20"/></svg>
+                            </span>
+                            <h3>Ripetizioni individuali</h3>
+                            <p>Percorsi personalizzati su tutte le materie scolastiche.</p>
+                            <div class="program-tags"><span>Individuale</span><span>Tutte le materie</span></div>
+                        </article>
+                        <article class="program-card">
+                            <span class="program-ic">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8 8 0 0 1-11.5 7.2L4 20l1.3-5A8 8 0 1 1 21 11.5Z"/></svg>
+                            </span>
+                            <h3>Colloqui con le famiglie</h3>
+                            <p>Confronto continuo su obiettivi e andamento scolastico.</p>
+                            <div class="program-tags"><span>Con la famiglia</span><span>Continuo</span></div>
+                        </article>
+                        <p class="programs-note">
+                            Percorsi attivabili tutto l’anno, individuali o in piccolo gruppo, su misura per ogni famiglia.
+                        </p>
                     </div>
-                    <p style="margin-top:14px;">
-                        I percorsi possono essere attivati durante tutto l’anno scolastico. Orari, durata e modalità
-                        (individuale o in piccolo gruppo) vengono concordati insieme alle famiglie in base ai bisogni
-                        specifici e alle disponibilità.
-                    </p>
                 </div>
             </div>
         </section>
@@ -1007,120 +336,52 @@
         <section class="section" id="sedi">
             <div class="section-inner">
                 <div class="section-header">
-                    <div>
-                        <div class="section-kicker">Dove siamo</div>
-                        <h2 class="section-title">Le nostre sedi</h2>
+                    <div class="section-header-main">
+                        <div class="section-header-icon"><img src="icons/map.svg" alt=""></div>
+                        <div>
+                            <div class="section-kicker">Dove siamo</div>
+                            <h2 class="section-title">Le nostre sedi</h2>
+                        </div>
                     </div>
                 </div>
                 <div class="section-body">
-                    <p>
-                        Svolgiamo le attività educative in due sedi operative, pensate per offrire un ambiente sereno,
-                        accogliente e funzionale allo studio. Gli spazi sono attrezzati per il lavoro individuale e di
-                        gruppo e vengono organizzati in modo da garantire concentrazione e supporto personalizzato.
-                    </p>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-label">Sede operativa</div>
-                            <div class="card-title">Sede di Pomezia</div>
-                            <div class="card-address">
-                                Via Santorre di Santarosa 10/E<br>
-                                00071 Pomezia (Roma)
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-map"
-                                        data-address="Via Santorre di Santarosa 10/E, 00071 Pomezia (RM)">
-                                    <span>📍</span> Apri mappa Pomezia
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-label">Sede operativa</div>
-                            <div class="card-title">Sede di Aprilia</div>
-                            <div class="card-address">
-                                Via Meucci 28<br>
-                                04011 Aprilia (LT)
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-map"
-                                        data-address="Via Meucci 28, 04011 Aprilia (LT)">
-                                    <span>📍</span> Apri mappa Aprilia
-                                </button>
-                            </div>
-                        </div>
+                    <p>Due sedi operative, per lavoro individuale e di gruppo.</p>
+
+                    <div class="sede-tabs" role="tablist">
+                        <button class="sede-tab active" role="tab" aria-selected="true"
+                                data-name="Pomezia"
+                                data-address-line1="Via Santorre di Santarosa 10/E"
+                                data-address-line2="00071 Pomezia (Roma)"
+                                data-address="Via Santorre di Santarosa 10/E, 00071 Pomezia (RM)">
+                            Pomezia
+                        </button>
+                        <button class="sede-tab" role="tab" aria-selected="false"
+                                data-name="Aprilia"
+                                data-address-line1="Via Meucci 28"
+                                data-address-line2="04011 Aprilia (LT)"
+                                data-address="Via Meucci 28, 04011 Aprilia (LT)">
+                            Aprilia
+                        </button>
                     </div>
 
-                    <!-- Mappa integrata -->
-                    <div class="map-wrapper">
-                        <div class="map-header">Mappa interattiva</div>
-                        <p class="map-subtitle">
-                            Usa i pulsanti sopra per cambiare sede sulla mappa e ottenere indicazioni stradali tramite
-                            Google Maps integrato nella pagina.
-                        </p>
-                        <div class="map-frame-wrapper">
-                            <iframe
-                                id="mapFrame"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                allowfullscreen>
-                            </iframe>
+                    <div class="sede-flip-wrapper">
+                        <div class="sede-flip-card" id="sedeFlip">
+                            <div class="sede-flip-info">
+                                <div class="sede-flip-label">Sede operativa</div>
+                                <div class="sede-flip-name" id="sedeName">Sede di Pomezia</div>
+                                <div class="sede-flip-address" id="sedeAddress">
+                                    Via Santorre di Santarosa 10/E<br>00071 Pomezia (Roma)
+                                </div>
+                            </div>
+                            <div class="map-frame-wrapper">
+                                <iframe
+                                    id="mapFrame"
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CHI SIAMO / MISSION -->
-        <section class="section" id="chi-siamo">
-            <div class="section-inner">
-                <div class="section-header">
-                    <div>
-                        <div class="section-kicker">L'associazione</div>
-                        <h2 class="section-title">Chi siamo e missione</h2>
-                    </div>
-                </div>
-                <div class="section-body two-column">
-                    <div>
-                        <p class="pill">
-                            <span class="pill-dot"></span>
-                            Associazione di Promozione Sociale senza scopo di lucro
-                        </p>
-                        <p>
-                            <strong>Eureka! APS</strong> è un’associazione di promozione sociale che opera senza scopo
-                            di lucro per promuovere il diritto allo studio e il benessere educativo. Crediamo che ogni
-                            ragazzo abbia bisogno di tempo, strumenti e relazioni significative per poter imparare e
-                            crescere con fiducia.
-                        </p>
-                        <p>
-                            La nostra missione è:
-                        </p>
-                        <ul style="margin-top:6px; padding-left:18px;">
-                            <li>rendere il sostegno scolastico accessibile e strutturato per le famiglie;</li>
-                            <li>offrire percorsi educativi continuativi, non occasionali, che accompagnino i ragazzi nel tempo;</li>
-                            <li>lavorare in rete con scuole, enti e servizi del territorio per costruire esperienze condivise;</li>
-                            <li>valorizzare le potenzialità di ciascuno, rispettando ritmi e bisogni individuali.</li>
-                        </ul>
-                        <p style="margin-top:10px;">
-                            Operiamo nel territorio di Pomezia e Aprilia, con l’obiettivo di diventare un punto di
-                            riferimento stabile per studenti e famiglie che cercano un supporto concreto e competente.
-                        </p>
-                    </div>
-                    <div>
-                        <p><strong>Dati dell’associazione</strong></p>
-                        <p>
-                            Eureka! – Associazione di Promozione Sociale<br>
-                            Via Santorre di Santarosa 10/E<br>
-                            00071 Pomezia (Roma)<br>
-                            Codice Fiscale: <strong>96583080583</strong>
-                        </p>
-                        <p>
-                            L’associazione opera secondo il proprio statuto e regolamento interno, nel rispetto della
-                            normativa vigente sulle associazioni di promozione sociale e sulle organizzazioni senza
-                            scopo di lucro.
-                        </p>
-                        <p>
-                            Su richiesta è possibile consultare lo statuto e i principali documenti associativi
-                            (delibere, rendiconti e materiali informativi) contattandoci tramite email.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -1128,66 +389,104 @@
 
         <!-- CONTATTI -->
         <section class="section" id="contatti">
-            <div class="section-inner">
+            <div class="section-inner section-inner--bare">
                 <div class="section-header">
-                    <div>
-                        <div class="section-kicker">Parliamone</div>
-                        <h2 class="section-title">Contatti</h2>
+                    <div class="section-header-main">
+                        <div class="section-header-icon"><img src="icons/message.svg" alt=""></div>
+                        <div>
+                            <div class="section-kicker">Parliamone</div>
+                            <h2 class="section-title">Contatti</h2>
+                        </div>
                     </div>
                 </div>
-                <div class="section-body two-column">
-                    <div>
-                        <div class="contact-highlight">
-                            Per informazioni su orari, disponibilità, costi e tipologie di percorsi (individuali o di
-                            gruppo), puoi contattarci direttamente tramite telefono o email. Siamo disponibili per
-                            un primo colloquio conoscitivo, senza impegno, per ascoltare i bisogni e proporre un
-                            percorso adeguato.
-                        </div>
-                        <p style="margin-top:10px;">
-                            Durante l’anno scolastico le attività si svolgono prevalentemente nel pomeriggio, con
-                            possibilità di concordare calendari specifici in base alle esigenze degli studenti.
-                        </p>
+                <div class="section-body contact">
+                    <p class="contatti-lead">Scrivici su WhatsApp o via email: rispondiamo il prima possibile, senza impegno.</p>
+
+                    <div class="contact-rows">
+                        <a class="contact-row" href="https://wa.me/393513712990" target="_blank" rel="noopener">
+                            <span class="contact-row-ic wa">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.13-2.9-7-1.87-1.87-4.35-2.92-7.02-2.92zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.4c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.25-8.25 8.25zm4.52-6.18c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+                            </span>
+                            <span class="contact-row-txt">
+                                <span class="contact-row-label">WhatsApp</span>
+                                <span class="contact-row-value">+39 351 371 2990</span>
+                            </span>
+                            <svg class="contact-row-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                        <a class="contact-row" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info@eurekaripetizioni.it&amp;su=Richiesta%20informazioni" target="_blank" rel="noopener">
+                            <span class="contact-row-ic em">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            </span>
+                            <span class="contact-row-txt">
+                                <span class="contact-row-label">Email</span>
+                                <span class="contact-row-value">info@eurekaripetizioni.it</span>
+                            </span>
+                            <svg class="contact-row-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
                     </div>
-                    <div>
-                        <div class="contact-data">
-                            <div>
-                                <div class="contact-row-label">Cellulare</div>
-                                <div class="contact-row-value">
-                                    <a href="tel:+393513712990">+39 351 371 2990</a>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="contact-row-label">Email</div>
-                                <div class="contact-row-value">
-                                    <a href="mailto:info@eurekaripetizioni.it">info@eurekaripetizioni.it</a>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="contact-row-label">Sede legale</div>
-                                <div class="contact-row-value">
-                                    Via Santorre di Santarosa 10/E<br>
-                                    00071 Pomezia (Roma)
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="contact-social">
+                        <span class="contact-social-label">Seguici</span>
+                        <a class="contact-social-ic ig" href="https://www.instagram.com/eureka_centroripetizioni/" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a class="contact-social-ic fb" href="https://www.facebook.com/Eurekaripetizionipomezia/" target="_blank" rel="noopener" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.917 3c-2.43 0-4.091 1.482-4.091 4.205v2.386H8.057v3.209h2.769v8.196h2.571z"/></svg>
+                        </a>
                     </div>
+
+                    <p class="contatti-note">
+                        Sede legale: Via Santorre di Santarosa 10/E, 00071 Pomezia (Roma) · attività nel pomeriggio,
+                        orari concordati con la famiglia.
+                    </p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="footer-inner">
-            <div>
-                © <span id="year"></span> Eureka! – Associazione di Promozione Sociale
+    <footer class="site-footer">
+        <div class="footer-hero">
+            <h2 class="footer-signature"><span class="brand-eureka">Eureka!</span><br><em>insieme.</em></h2>
+        </div>
+        <div class="footer-main">
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <div class="footer-col-title">Eureka! APS</div>
+                    <p class="footer-col-text">Doposcuola, ripetizioni e metodo di studio a Pomezia e Aprilia.</p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-col-title">Contatti</div>
+                    <a href="https://wa.me/393513712990">+39 351 371 2990</a>
+                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info@eurekaripetizioni.it&amp;su=Richiesta%20informazioni" target="_blank" rel="noopener">info@eurekaripetizioni.it</a>
+                    <span>Via Santorre di Santarosa 10/E, 00071 Pomezia (RM)</span>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-col-title">Naviga</div>
+                    <a href="#chi-siamo" data-scroll="#chi-siamo">Chi siamo</a>
+                    <a href="#obiettivi" data-scroll="#obiettivi">Obiettivi</a>
+                    <a href="#programmi" data-scroll="#programmi">Programmi e servizi</a>
+                    <a href="#sedi" data-scroll="#sedi">Le nostre sedi</a>
+                    <a href="#contatti" data-scroll="#contatti">Contatti</a>
+                </div>
             </div>
-            <div>
-                Sede legale: Via Santorre di Santarosa 10/E, 00071 Pomezia (RM) – C.F. 96583080583 |
-                <a href="./privacy.html" data-scroll="#privacy">Privacy Policy</a>
+            <div class="footer-watermark" aria-hidden="true">Eureka</div>
+        </div>
+        <div class="footer-bottom">
+            <div>© <span id="year"></span> Eureka! APS · C.F. 96583080583</div>
+            <div class="footer-bottom-links">
+                <a href="./privacy.html">Privacy Policy</a>
+                <a class="footer-staff-pill" href="https://archimede.eurekaripetizioni.it" target="_blank" rel="noopener">🤖 Dashboard di Archimede</a>
             </div>
         </div>
     </footer>
+    <div class="cookie-manage-wrap">
+        <button class="cookie-manage" id="cookieManage" type="button">Impostazioni cookie</button>
+    </div>
 </div>
+
+<a class="wa-fab" href="https://wa.me/393513712990" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.13-2.9-7-1.87-1.87-4.35-2.92-7.02-2.92zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.4c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.25-8.25 8.25zm4.52-6.18c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+</a>
 
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
     <div class="cookie-text">
@@ -1200,195 +499,7 @@
         <button class="cookie-btn primary" id="cookieAccept">Accetta</button>
     </div>
 </div>
-<button class="cookie-manage" id="cookieManage" type="button">Impostazioni cookie</button>
 
-<script>
-    // Anno automatico footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Cookie banner / Google Analytics
-    const GA_MEASUREMENT_ID = 'G-E2C088Q8M9';                                                                                                                       //codice google qui. 
-    const GA_DISABLED_FLAG = GA_MEASUREMENT_ID ? `ga-disable-${GA_MEASUREMENT_ID}` : null;
-    const CONSENT_KEY = 'cookie-consent';
-    const cookieBanner = document.getElementById('cookieBanner');
-    const cookieManage = document.getElementById('cookieManage');
-    const cookieAccept = document.getElementById('cookieAccept');
-    const cookieReject = document.getElementById('cookieReject');
-    let analyticsLoaded = false;
-
-    function showCookieBanner() {
-        if (cookieBanner) {
-            cookieBanner.classList.add('visible');
-        }
-        if (cookieManage) {
-            cookieManage.classList.remove('visible');
-        }
-    }
-
-    function hideCookieBanner() {
-        if (cookieBanner) {
-            cookieBanner.classList.remove('visible');
-        }
-    }
-
-    function toggleManageButton(visible) {
-        if (!cookieManage) return;
-        cookieManage.classList.toggle('visible', Boolean(visible));
-    }
-
-    function clearAnalyticsCookies() {
-        const analyticsCookies = ['_ga', '_gid', '_gat', `_ga_${GA_MEASUREMENT_ID?.replace('G-', '') || ''}`];
-        analyticsCookies.forEach(function (cookieName) {
-            if (!cookieName) return;
-            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-        });
-    }
-
-    function setAnalyticsDisabled(disabled) {
-        if (!GA_DISABLED_FLAG) return;
-        window[GA_DISABLED_FLAG] = Boolean(disabled);
-        if (disabled) {
-            clearAnalyticsCookies();
-        }
-    }
-
-    function loadGoogleAnalytics() {
-        if (analyticsLoaded) return;
-        if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
-            console.warn('Imposta GA_MEASUREMENT_ID per attivare Google Analytics.');
-            return;
-        }
-        analyticsLoaded = true;
-        setAnalyticsDisabled(false);
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-        document.head.appendChild(script);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        window.gtag = window.gtag || gtag;
-        gtag('js', new Date());
-        gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
-    }
-
-    function applyConsent(status) {
-        if (status === 'accepted') {
-            loadGoogleAnalytics();
-            hideCookieBanner();
-            toggleManageButton(true);
-        } else if (status === 'rejected') {
-            setAnalyticsDisabled(true);
-            hideCookieBanner();
-            toggleManageButton(true);
-        }
-    }
-
-    if (cookieAccept) {
-        cookieAccept.addEventListener('click', function () {
-            localStorage.setItem(CONSENT_KEY, 'accepted');
-            applyConsent('accepted');
-        });
-    }
-
-    if (cookieReject) {
-        cookieReject.addEventListener('click', function () {
-            localStorage.setItem(CONSENT_KEY, 'rejected');
-            applyConsent('rejected');
-        });
-    }
-
-    if (cookieManage) {
-        cookieManage.addEventListener('click', function () {
-            showCookieBanner();
-        });
-    }
-
-    (function initConsent() {
-        setAnalyticsDisabled(true);
-        const saved = localStorage.getItem(CONSENT_KEY);
-        if (saved === 'accepted') {
-            applyConsent('accepted');
-        } else if (saved === 'rejected') {
-            applyConsent('rejected');
-        } else {
-            showCookieBanner();
-        }
-    })();
-
-    // Smooth scroll
-    function smoothScrollTo(target) {
-        const el = document.querySelector(target);
-        if (!el) return;
-        const headerOffset = 70;
-        const rect = el.getBoundingClientRect();
-        const offset = rect.top + window.scrollY - headerOffset;
-
-        window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
-        });
-    }
-
-    document.querySelectorAll('[data-scroll]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const target = this.getAttribute('data-scroll');
-            smoothScrollTo(target);
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks.classList.contains('open')) {
-                navLinks.classList.remove('open');
-            }
-        });
-    });
-
-    // Toggle menu mobile
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    navToggle.addEventListener('click', function () {
-        navLinks.classList.toggle('open');
-    });
-
-    // Chiudi menu se clic fuori (mobile)
-    document.addEventListener('click', function (e) {
-        if (window.innerWidth > 768) return;
-        if (!navLinks.contains(e.target) && e.target !== navToggle && !navToggle.contains(e.target)) {
-            navLinks.classList.remove('open');
-        }
-    });
-
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 768) {
-            navLinks.classList.remove('open');
-        }
-    });
-
-    // MAPPA GOOGLE "BUILT-IN"
-    const mapFrame = document.getElementById('mapFrame');
-
-    function setMap(address) {
-        if (!mapFrame) return;
-        const base = 'https://www.google.com/maps?q=';
-        const url = base + encodeURIComponent(address) + '&output=embed';
-        mapFrame.src = url;
-    }
-
-    // Collega i pulsanti mappa
-    document.querySelectorAll('.btn-map').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const address = this.getAttribute('data-address');
-            if (!address) return;
-            setMap(address);
-            // scroll verso la mappa
-            const mapWrapper = document.querySelector('.map-wrapper');
-            if (mapWrapper) {
-                mapWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // Mappa iniziale: Pomezia
-    setMap('Via Santorre di Santarosa 10/E, 00071 Pomezia (RM)');
-</script>
+<script src="js/index.js"></script>
 </body>
 </html>

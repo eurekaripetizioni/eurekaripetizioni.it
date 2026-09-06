@@ -1,0 +1,320 @@
+/* =========================================================================
+   Privacy Policy — riusa token e componenti di index.css (header, nav,
+   footer, cookie banner, wa-fab, .pill, .section-kicker).
+   Qui solo ciò che è specifico della pagina: fascia titolo, indice
+   laterale sticky, corpo del documento.
+   ========================================================================= */
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
+/* ============================ FASCIA TITOLO =========================== */
+
+.privacy-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--hairline);
+}
+
+.privacy-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: var(--space-lg);
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color 0.2s var(--ease);
+}
+
+.privacy-back:hover { color: var(--text-primary); }
+.privacy-back svg { width: 16px; height: 16px; }
+
+.privacy-hero h1 {
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: var(--space-xs) 0 var(--space-md);
+    color: var(--text-primary);
+}
+
+.privacy-hero .pill { margin-bottom: var(--space-md); }
+
+.privacy-lead {
+    font-size: clamp(17px, 2vw, 20px);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 46rem;
+    margin: 0;
+}
+
+.privacy-lead strong { color: var(--text-primary); font-weight: 600; }
+
+/* ===================== LAYOUT: INDICE + DOCUMENTO ==================== */
+
+.privacy-layout {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md) var(--space-2xl);
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+/* Indice laterale sticky con scroll-spy */
+.privacy-toc {
+    position: sticky;
+    top: 84px;
+    font-size: 14px;
+}
+
+.privacy-toc-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.privacy-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: toc;
+    border-left: 1px solid var(--hairline);
+}
+
+.privacy-toc li { counter-increment: toc; }
+
+.privacy-toc a {
+    display: block;
+    padding: 7px 0 7px 16px;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.privacy-toc a::before {
+    content: counter(toc) ". ";
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.privacy-toc a:hover { color: var(--text-primary); }
+
+.privacy-toc a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    font-weight: 500;
+}
+
+.privacy-toc a.active::before { color: var(--accent); }
+
+/* ============================ DOCUMENTO ============================== */
+
+.privacy-doc { min-width: 0; }
+
+.privacy-block {
+    scroll-margin-top: 84px;
+    padding: var(--space-lg);
+    border-radius: 22px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--card-border);
+    margin-bottom: var(--space-md);
+}
+
+.privacy-block > h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 var(--space-sm);
+    font-size: clamp(19px, 2.6vw, 23px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.privacy-num {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    border: 1px solid var(--card-border);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.privacy-block h3 {
+    margin: var(--space-lg) 0 var(--space-xs);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.privacy-block p,
+.privacy-block li {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.privacy-block p { margin: var(--space-sm) 0; }
+.privacy-block p:last-child { margin-bottom: 0; }
+.privacy-block strong { color: var(--text-primary); font-weight: 600; }
+.privacy-block a { color: var(--accent); text-underline-offset: 2px; }
+.privacy-block a:hover { text-decoration: underline; }
+
+.privacy-block ul {
+    margin: var(--space-sm) 0;
+    padding-left: 20px;
+}
+
+.privacy-block li { margin: 5px 0; }
+
+/* Bottone "gestisci cookie" dentro la sezione 3 */
+.cookie-open {
+    margin-top: var(--space-md);
+    padding: 9px 18px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--card-border);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.cookie-open:hover { filter: brightness(0.97); }
+.cookie-open:active { transform: scale(0.97); }
+
+/* Finalità → base giuridica come schede */
+.purpose-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.purpose-list > li {
+    margin: 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    border: 1px solid var(--card-border);
+}
+
+.purpose-list strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.purpose-list em {
+    display: block;
+    margin-top: var(--space-sm);
+    font-style: normal;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.purpose-list em b { color: var(--text-primary); font-weight: 600; }
+
+/* Callout contatto finale */
+.privacy-contact {
+    margin-top: var(--space-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border-radius: 22px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--card-border);
+}
+
+.privacy-contact p {
+    margin: 0;
+    flex: 1;
+    min-width: 220px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.privacy-contact-btn {
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 15px;
+    padding: 11px 20px;
+    text-decoration: none;
+}
+
+.privacy-contact-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: var(--space-lg);
+    padding: 6px 4px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s var(--ease);
+}
+
+.to-top:hover { color: var(--text-primary); }
+.to-top svg { width: 14px; height: 14px; }
+
+/* ============================ RESPONSIVE ============================= */
+
+@media (max-width: 900px) {
+    .privacy-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-lg);
+    }
+
+    .privacy-toc {
+        position: static;
+        top: auto;
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        background: var(--bg-secondary);
+        border: 1px solid var(--card-border);
+    }
+
+    .privacy-toc ol {
+        border-left: none;
+        columns: 2;
+        column-gap: var(--space-md);
+    }
+
+    .privacy-toc a { padding: 6px 0; border-left: none; }
+    .privacy-toc a.active { border-left: none; }
+}
+
+@media (max-width: 560px) {
+    .privacy-hero { padding: var(--space-lg) var(--space-md); }
+    .privacy-toc ol { columns: 1; }
+    .privacy-block { padding: var(--space-md); }
+    .privacy-contact { padding: var(--space-md); }
+}
